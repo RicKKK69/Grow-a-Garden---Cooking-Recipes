@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Grow a Garden - Cooking Recipes</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: #f4f7fa;
+      color: #333;
+      padding: 40px 20px;
+      max-width: 1000px;
+      margin: auto;
+      position: relative;
+      z-index: 1;
+    }
+    
+   #portfolioBtn {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  background: linear-gradient(135deg, #7b1fa2, #e91e63);
+  color: white;
+  padding: 10px 18px;
+  font-weight: bold;
+  border-radius: 30px;
+  text-decoration: none;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  z-index: 10;
+}
+
+#portfolioBtn:hover {
+  transform: scale(1.1);
+  box-shadow: 0 6px 18px rgba(233, 30, 99, 0.5);
+}
+
+
+#portfolioBtn:hover {
+  transform: scale(1.1);
+  box-shadow: 0 6px 18px rgba(233, 30, 99, 0.5);
+}
+
+
+    h1 {
+      text-align: center;
+      color: #2c786c;
+      margin-bottom: 20px;
+    }
+
+    #searchBar {
+      width: 100%;
+      max-width: 400px;
+      display: block;
+      margin: 0 auto 20px auto;
+      padding: 10px;
+      font-size: 1em;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+    }
+
+    #resetBtn {
+      display: block;
+      margin: 10px auto 30px auto;
+      padding: 8px 16px;
+      font-size: 0.95em;
+      border: none;
+      background-color: #dcedc8;
+      color: #2e7d32;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      background-color: #fff;
+      border-radius: 10px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+      overflow: hidden;
+    }
+
+    th, td {
+      padding: 16px 20px;
+      text-align: left;
+      border-bottom: 1px solid #e0e0e0;
+      vertical-align: top;
+    }
+
+    th {
+      background-color: #dcedc8;
+      color: #33691e;
+    }
+
+    .food-name {
+      font-weight: bold;
+      color: #00695c;
+      font-size: 1.1em;
+    }
+
+    .rarity {
+      display: inline-block;
+      font-size: 0.9em;
+      padding: 4px 8px;
+      border-radius: 5px;
+      font-weight: bold;
+    }
+
+    .prismatic { background-color: #e1bee7; color: #6a1b9a; }
+    .divine { background-color: #ffe082; color: #e65100; }
+    .mythical { background-color: #ffcdd2; color: #b71c1c; }
+    .legendary { background-color: #f8bbd0; color: #880e4f }
+    .rare { background-color: #c5cae9; color: #303f9f; }
+    .uncommon { background-color: #dcedc8; color: #33691e; }
+    .normal { background-color: #eeeeee; color: #616161; }
+
+    tr.hidden {
+      display: none;
+    }
+
+    .emoji-bg {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .emoji {
+      position: absolute;
+      font-size: 2rem;
+      opacity: 0.4;
+      animation: fall linear infinite;
+    }
+
+    @keyframes fall {
+      0% {
+        transform: translateY(-100px) rotate(0deg);
+        opacity: 0;
+      }
+      20% {
+        opacity: 0.3;
+      }
+      100% {
+        transform: translateY(120vh) rotate(360deg);
+        opacity: 0;
+      }
+    }
+
+    @media screen and (max-width: 768px) {
+      body {
+        padding: 20px 10px;
+      }
+
+      table, th, td {
+        font-size: 0.95em;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<!-- Animated Emoji Background -->
+<div class="emoji-bg" id="emoji-bg"></div>
+  
+  <a href="https://rickkk69.github.io/Portfolio" target="_blank" id="portfolioBtn">✨ Click Me</a>
+
+
+<h1>🍽️ Grow a Garden - Cooking Recipes</h1>
+
+<input type="text" id="searchBar" placeholder="🔍 Search by food or ingredient..." onkeyup="filterTable()">
+<button id="resetBtn" onclick="resetSearch()">Reset</button>
+
+<table id="recipeTable">
+  <thead>
+    <tr>
+      <th>🍱 Food</th>
+      <th>⭐ Rarity</th>
+      <th>🧂 Ingredients</th>
+    </tr>
+  </thead>
+  <tbody>
+  <tr><td class="food-name">🥣 Soup</td><td colspan="2">Anything (if not used in another recipe)</td></tr>
+
+   <tr><td class="food-name">🥗 Salad</td><td><span class="rarity prismatic">Prismatic</span></td><td>🍅 1x Tomato<br>💀 4x Bone Blossom</td></tr>
+  <tr><td class="food-name">🥪 Sandwich</td><td><span class="rarity prismatic">Prismatic</span></td><td>🍅 1x Tomato, 🍌 1x Banana, 💀 3x Bone Blossom</td></tr>
+  <tr><td class="food-name">🥧 Pie</td><td><span class="rarity prismatic">Prismatic</span></td><td>🎃 1x Pumpkin, 💀 4x Bone Blossom<br><strong>OR</strong><br>🥥 1x Coconut, 💀 2x Bone Blossom</td></tr>
+  <tr><td class="food-name">🧇 Waffle</td><td><span class="rarity prismatic">Prismatic</span></td><td>💀 3x Bone Blossom, 🍏 1x Sugar Apple, 🥥 1x Coconut</td></tr>
+  <tr><td class="food-name">🌭 Hot Dog</td><td><span class="rarity prismatic">Prismatic</span></td><td>🌽 1x Corn, 💀 4x Bone Blossom<br><strong>OR</strong><br>🌽 1x Violet Corn, 💀 4x Bone Blossom</td></tr>
+  <tr><td class="food-name">🍨 Ice Cream</td><td><span class="rarity prismatic">Prismatic</span></td><td>🍬 1x Sugarglaze, 🍏 1x Sugar Apple, 💀 3x Bone Blossom</td></tr>
+  <tr><td class="food-name">🍩 Donut</td><td><span class="rarity prismatic">Prismatic</span></td><td>🍬 1x Sugarglaze, 💀 4x Bone Blossom</td></tr>
+  <tr><td class="food-name">🍕 Pizza</td><td><span class="rarity prismatic">Prismatic</span></td><td>🌱 1x Beanstalk, 🍌 1x Banana, 💀 3x Bone Blossom</td></tr>
+  <tr><td class="food-name">🍣 Sushi</td><td><span class="rarity prismatic">Prismatic</span></td><td>💀 3x Bone Blossom, 🌽 1x Violet Corn, 🎋 1x Lucky Bamboo</td></tr>
+  <tr><td class="food-name">🍔 Burger</td><td><span class="rarity prismatic">Prismatic</span></td><td>🌽 1x Violet Corn, 🍅 1x Tomato, 💀 3x Bone Blossom</td></tr>
+  <tr><td class="food-name">🎂 Cake</td><td><span class="rarity prismatic">Prismatic</span></td><td>💀 3x Bone Blossom, 🍏 1x Sugar Apple, 🍌 1x Banana</td></tr>
+
+  <tr><td class="food-name">🥗 Salad</td><td><span class="rarity divine">Divine</span></td><td>🌱 4x Beanstalk, 🍅 1x Tomato<br><strong>OR</strong><br>💀 2x Bone Blossom, 🍍 1x Pineapple, 🌶️ 1x Pepper, 🍅 1x Tomato</td></tr>
+  <tr><td class="food-name">🥪 Sandwich</td><td><span class="rarity divine">Divine</span></td><td>💀 3x Bone Blossom, 🍅 1x Tomato, 🌽 1x Corn</td></tr>
+  <tr><td class="food-name">🥧 Pie</td><td><span class="rarity divine">Divine</span></td><td>🥥 1x Coconut, 🌱 1x Beanstalk<br><strong>OR</strong><br>🥥 1x Coconut, 🌶️ 1x Pepper, 🍓 2x Elder Strawberry, 🌌 1x Celestiberry<br><strong>OR</strong><br>🍏 3x Sugar Apple, 🎃 1x Pumpkin</td></tr>
+  <tr><td class="food-name">🧇 Waffle</td><td><span class="rarity divine">Divine</span></td><td>🍏 1x Sugar Apple, 🥥 1x Coconut</td></tr>
+  <tr><td class="food-name">🌭 Hot Dog</td><td><span class="rarity divine">Divine</span></td><td>🌽 1x Corn, 🔥 4x Ember Lily<br><strong>OR</strong><br>💀 2x Bone Blossom, 🌱 2x Beanstalk, 🌽 1x Corn</td></tr>
+  <tr><td class="food-name">🍨 Ice Cream</td><td><span class="rarity divine">Divine</span></td><td>🍏 3x Sugar Apple, 🌽 1x Corn<br><strong>OR</strong><br>🍅 1x Tomato, 💀 1x Bone Blossom, 🍏 1x Sugar Apple</td></tr>
+  <tr><td class="food-name">🍩 Donut</td><td><span class="rarity divine">Divine</span></td><td>💀 1x Bone Blossom, 🍏 1x Sugar Apple, 🍌 1x Banana</td></tr>
+  <tr><td class="food-name">🍕 Pizza</td><td><span class="rarity divine">Divine</span></td><td>🍏 1x Sugar Apple, 💀 1x Bone Blossom, 🌽 1x Corn</td></tr>
+  <tr><td class="food-name">🍣 Sushi</td><td><span class="rarity divine">Divine</span></td><td>💀 3x Bone Blossom, 🎍 1x Bamboo, 🌽 1x Corn</td></tr>
+  <tr><td class="food-name">🍔 Burger</td><td><span class="rarity divine">Divine</span></td><td>💀 3x Bone Blossom, 🌽 1x Corn, 🍅 1x Tomato</td></tr>
+  <tr><td class="food-name">🎂 Cake</td><td><span class="rarity divine">Divine</span></td><td>🍌 1x Banana, 🥝 1x Kiwi, 💀 3x Bone Blossom<br><strong>OR</strong><br>🍏 4x Sugar Apple, 🌽 1x Corn<br><strong>OR</strong><br>🍓 4x Elder Strawberry, 🌽 1x Corn</td></tr>
+
+      <tr><td class="food-name">🥗 Salad</td><td><span class="rarity mythical">Mythical</span></td><td>🍅 1x Tomato, 🌰 1x Giant Pinecone<br><strong>OR</strong><br>🍏 2x Sugar Apple, 🌶️ 1x Pepper, 🍅 1x Tomato</td></tr>
+  <tr><td class="food-name">🥪 Sandwich</td><td><span class="rarity mythical">Mythical</span></td><td>🌰 2x Giant Pinecone, 🍅 1x Tomato, 🌽 1x Corn</td></tr>
+  <tr><td class="food-name">🥧 Pie</td><td><span class="rarity mythical">Mythical</span></td><td>🍏 1x Apple, 🎃 1x Pumpkin</td></tr>
+  <tr><td class="food-name">🧇 Waffle</td><td><span class="rarity mythical">Mythical</span></td><td>🌸 1x Tranquil Bloom, ⭐ 1x Starfruit, 🥥 1x Coconut<br><strong>OR</strong><br>🍇 1x Grape, 🥥 1x Coconut, 🐉 1x Dragon Fruit, 🌵 1x Cactus, 🍑 1x Peach</td></tr>
+  <tr><td class="food-name">🌭 Hot Dog</td><td><span class="rarity mythical">Mythical</span></td><td>🔥 1x Ember Lily, 🌽 1x Corn</td></tr>
+  <tr><td class="food-name">🍨 Ice Cream</td><td><span class="rarity mythical">Mythical</span></td><td>🍌 1x Banana, 🍏 1x Sugar Apple</td></tr>
+  <tr><td class="food-name">🍩 Donut</td><td><span class="rarity mythical">Mythical</span></td><td>🍏 1x Sugar Apple, 🌽 2x Corn</td></tr>
+  <tr><td class="food-name">🍕 Pizza</td><td><span class="rarity mythical">Mythical</span></td><td>🍅 1x Tomato, 🌽 1x Corn, 🌶️ 1x Pepper, 🍏 2x Sugar Apple<br><strong>OR</strong><br>🌰 1x Giant Pinecone, 🌽 1x Corn, 🍏 1x Apple, 🍄 1x Mushroom, 🌶️ 1x Pepper</td></tr>
+  <tr><td class="food-name">🍣 Sushi</td><td><span class="rarity mythical">Mythical</span></td><td>🍏 3x Sugar Apple, 🎍 1x Bamboo, 🌽 1x Corn<br><strong>OR</strong><br>🎍 2x Bamboo, 💀 2x Bone Blossom, 🌽 1x Corn</td></tr>
+  <tr><td class="food-name">🍔 Burger</td><td><span class="rarity mythical">Mythical</span></td><td>🌶️ 1x Pepper, 🌽 1x Corn, 🍅 1x Tomato, 💀 1x Bone Blossom, 🌱 1x Beanstalk</td></tr>
+  <tr><td class="food-name">🎂 Cake</td><td><span class="rarity mythical">Mythical</span></td><td>🍏 2x Sugar Apple, 🌽 2x Corn</td></tr>
+
+
+  <tr><td class="food-name">🥗 Salad</td><td><span class="rarity legendary">Legendary</span></td><td>🍌 2x Blood Banana, 🍅 2x Tomato<br><strong>OR</strong><br>🎍 1x Bamboo, 🥭 1x Mango, 🍍 1x Pineapple, 🍅 1x Tomato, 🌱 1x Beanstalk</td></tr>
+  <tr><td class="food-name">🥪 Sandwich</td><td><span class="rarity legendary">Legendary</span></td><td>🍫 1x Cacao, 🍅 1x Tomato, 🌽 1x Corn<br><strong>OR</strong><br>🍅 1x Tomato, 🌽 1x Corn, 🍓 1x Elder Strawberry</td></tr>
+  <tr><td class="food-name">🥧 Pie</td><td><span class="rarity legendary">Legendary</span></td><td>🌽 1x Corn, 🥥 1x Coconut</td></tr>
+  <tr><td class="food-name">🧇 Waffle</td><td><span class="rarity legendary">Legendary</span></td><td>🍏 1x Sugar Apple, 🍉 1x Watermelon, 🌽 1x Corn, 🍬 1x Sugarglaze</td></tr>
+  <tr><td class="food-name">🌭 Hot Dog</td><td><span class="rarity legendary">Legendary</span></td><td>🌶️ 1x Pepper, 🌽 1x Corn</td></tr>
+  <tr><td class="food-name">🍨 Ice Cream</td><td><span class="rarity legendary">Legendary</span></td><td>🍌 2x Banana<br><strong>OR</strong><br>🍍 1x Pineapple, 🌽 1x Corn</td></tr>
+  <tr><td class="food-name">🍩 Donut</td><td><span class="rarity legendary">Legendary</span></td><td>🍌 1x Blood Banana, 🍈 1x Moon Melon</td></tr>
+  <tr><td class="food-name">🍕 Pizza</td><td><span class="rarity legendary">Legendary</span></td><td>🌽 2x Corn, 🍏 2x Apple, 🌶️ 1x Pepper<br><strong>OR</strong><br>🌵 1x Cactus, 🌽 1x Corn, 🥥 1x Coconut</td></tr>
+  <tr><td class="food-name">🍣 Sushi</td><td><span class="rarity legendary">Legendary</span></td><td>🌶️ 1x Pepper, 🥥 1x Coconut, 🎍 1x Bamboo, 🌽 1x Corn</td></tr>
+  <tr><td class="food-name">🍔 Burger</td><td><span class="rarity legendary">Legendary</span></td><td>🌶️ 1x Pepper, 🌽 1x Corn, 🍅 1x Tomato</td></tr>
+  <tr><td class="food-name">🎂 Cake</td><td><span class="rarity legendary">Legendary</span></td><td>🥝 2x Kiwi, 🍌 2x Banana</td></tr>
+
+
+<tr><td class="food-name">🥗 Salad</td><td><span class="rarity rare">Rare</span></td><td>🍅 5x Tomato</td></tr>
+<tr><td class="food-name">🍕 Pizza</td><td><span class="rarity rare">Rare</span></td><td>🍌 1x Banana, 🍅 1x Tomato</td></tr>
+<tr><td class="food-name">🎂 Cake</td><td><span class="rarity rare">Rare</span></td><td>🔵 1x Blueberry, 🍇 1x Grape, 🍏 1x Apple, 🌽 1x Corn<br><strong>OR</strong><br>🍌 2x Banana, 🍓 2x Strawberry, 🎃 1x Pumpkin<br><strong>OR</strong><br>🔥 1x Ember Lily, 🍑 2x Peach</td></tr>
+
+
+<tr><td class="food-name">🥗 Salad</td><td><span class="rarity uncommon">Uncommon</span></td><td>🍅 2x Tomato</td></tr>
+<tr><td class="food-name">🍨 Ice Cream</td><td><span class="rarity uncommon">Uncommon</span></td><td>🔵 1x Blueberry, 🌽 1x Corn<br><strong>OR</strong><br>🍓 1x Strawberry, 🌽 1x Corn</td></tr>
+<tr><td class="food-name">🍩 Donut</td><td><span class="rarity uncommon">Uncommon</span></td><td>🌽 2x Corn, 🥭 1x Spiked Mango<br><strong>OR</strong><br>🌽 1x Corn, 🔵 1x Blueberry, 🍓 1x Strawberry</td></tr>
+<tr><td class="food-name">🎂 Cake</td><td><span class="rarity uncommon">Uncommon</span></td><td>🌽 2x Corn, 🍓 2x Strawberry<br><strong>OR</strong><br>🔵 2x Blueberry, 🌽 1x Corn, 🍅 1x Tomato<br><strong>OR</strong><br>🌽 2x Corn, 🍉 2x Watermelon<br><strong>OR</strong><br>🎃 1x Pumpkin, 🌰 1x Giant Pinecone, 🌽 1x Corn, 🍏 1x Apple</td></tr>
+
+
+<!-- 🔵 Normal -->
+<tr><td class="food-name">🥪 Sandwich</td><td><span class="rarity normal">Normal</span></td><td>🍅 2x Tomato, 🌽 1x Corn</td></tr>
+<tr><td class="food-name">🥧 Pie</td><td><span class="rarity normal">Normal</span></td><td>🌽 1x Corn, 🎃 1x Pumpkin</td></tr>
+<tr><td class="food-name">🧇 Waffle</td><td><span class="rarity normal">Normal</span></td><td>🍓 1x Strawberry, 🥥 1x Coconut</td></tr>
+<tr><td class="food-name">🌭 Hot Dog</td><td><span class="rarity normal">Normal</span></td><td>🍌 1x Banana, 🌶️ 1x Pepper</td></tr>
+<tr><td class="food-name">🍣 Sushi</td><td><span class="rarity normal">Normal</span></td><td>🎍 4x Bamboo, 🌽 1x Corn</td></tr>
+
+
+  </tbody>
+</table>
+
+<script>
+  function filterTable() {
+    const input = document.getElementById("searchBar").value.toLowerCase();
+    const rows = document.querySelectorAll("#recipeTable tbody tr");
+    rows.forEach(row => {
+      const text = row.textContent.toLowerCase();
+      row.classList.toggle("hidden", !text.includes(input));
+    });
+  }
+
+  function resetSearch() {
+    document.getElementById("searchBar").value = "";
+    filterTable();
+  }
+
+  const emojis = ["🍅", "🌽", "🍓", "🌱", "💀", "🥥", "🍕", "🍌", "🎃", "🍩", "🍔"];
+  const container = document.getElementById("emoji-bg");
+
+  for (let i = 0; i < 30; i++) {
+    const emoji = document.createElement("div");
+    emoji.classList.add("emoji");
+    emoji.innerText = emojis[Math.floor(Math.random() * emojis.length)];
+    emoji.style.left = Math.random() * 100 + "vw";
+    emoji.style.animationDuration = (5 + Math.random() * 10) + "s";
+    emoji.style.animationDelay = Math.random() * 5 + "s";
+    container.appendChild(emoji);
+  }
+</script>
+
+</body>
+</html>
