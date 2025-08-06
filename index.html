@@ -14,33 +14,26 @@
       position: relative;
       z-index: 1;
     }
-    
-   #portfolioBtn {
-  position: absolute;
-  top: 20px;
-  right: 20px;
-  background: linear-gradient(135deg, #7b1fa2, #e91e63);
-  color: white;
-  padding: 10px 18px;
-  font-weight: bold;
-  border-radius: 30px;
-  text-decoration: none;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-  z-index: 10;
-}
 
-#portfolioBtn:hover {
-  transform: scale(1.1);
-  box-shadow: 0 6px 18px rgba(233, 30, 99, 0.5);
-}
+    #portfolioBtn {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      background: linear-gradient(135deg, #7b1fa2, #e91e63);
+      color: white;
+      padding: 10px 18px;
+      font-weight: bold;
+      border-radius: 30px;
+      text-decoration: none;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      z-index: 10;
+    }
 
-
-#portfolioBtn:hover {
-  transform: scale(1.1);
-  box-shadow: 0 6px 18px rgba(233, 30, 99, 0.5);
-}
-
+    #portfolioBtn:hover {
+      transform: scale(1.1);
+      box-shadow: 0 6px 18px rgba(233, 30, 99, 0.5);
+    }
 
     h1 {
       text-align: center;
@@ -52,11 +45,15 @@
       width: 100%;
       max-width: 400px;
       display: block;
-      margin: 0 auto 20px auto;
+      margin: 0 auto 10px auto;
       padding: 10px;
       font-size: 1em;
       border-radius: 8px;
       border: 1px solid #ccc;
+    }
+
+    #ingredientOnly {
+      margin-right: 5px;
     }
 
     #resetBtn {
@@ -163,15 +160,18 @@
 </head>
 <body>
 
-<!-- Animated Emoji Background -->
 <div class="emoji-bg" id="emoji-bg"></div>
-  
-  <a href="https://rickkk69.github.io/Portfolio" target="_blank" id="portfolioBtn">✨ Click Me</a>
 
+<a href="" target="_blank" id="portfolioBtn">✨ Click Me</a>
 
 <h1>🍽️ Grow a Garden - Cooking Recipes</h1>
 
 <input type="text" id="searchBar" placeholder="🔍 Search by food or ingredient..." onkeyup="filterTable()">
+
+<label style="display: block; text-align: center; margin-top: -10px;">
+  <input type="checkbox" id="ingredientOnly"> Search ingredients only
+</label>
+
 <button id="resetBtn" onclick="resetSearch()">Reset</button>
 
 <table id="recipeTable">
@@ -257,21 +257,74 @@
   </tbody>
 </table>
 
+<!-- For brevity, the table is not repeated here since you're copying this into the existing file. Just replace everything except the table. -->
+
 <script>
+  async function loadRecipes() {
+    const proxyUrl = "https://api.allorigins.win/raw?url=";
+    const wikiUrl = "https://growagarden.fandom.com/wiki/Cooking_Event";
+    try {
+      const response = await fetch(proxyUrl + encodeURIComponent(wikiUrl));
+      const htmlText = await response.text();
+      const doc = new DOMParser().parseFromString(htmlText, "text/html");
+      const wikiTables = doc.querySelectorAll(".article-table");
+
+      const recipeTable = wikiTables[0]; // Assume the first table is the recipe table
+      const rows = recipeTable.querySelectorAll("tr");
+      const tbody = document.querySelector("#recipeTable tbody");
+      tbody.innerHTML = ""; // Clear existing rows
+
+      rows.forEach((r, i) => {
+        if (i === 0) return; // Skip header
+        const cells = r.querySelectorAll("td, th");
+        if (cells.length < 3) return;
+
+        const food = cells[0].textContent.trim();
+        const rarity = cells[1].textContent.trim();
+        const ingredients = cells[2].innerHTML.trim();
+
+        const tr = document.createElement("tr");
+        tr.innerHTML = `
+          <td class="food-name">${food}</td>
+          <td><span class="rarity ${rarity.toLowerCase()}">${rarity}</span></td>
+          <td>${ingredients}</td>
+        `;
+        tbody.appendChild(tr);
+      });
+
+      filterTable(); // Apply current search
+    } catch (error) {
+      console.error("Failed to load wiki recipes:", error);
+    }
+  }
+
   function filterTable() {
     const input = document.getElementById("searchBar").value.toLowerCase();
+    const ingredientOnly = document.getElementById("ingredientOnly").checked;
     const rows = document.querySelectorAll("#recipeTable tbody tr");
+
     rows.forEach(row => {
-      const text = row.textContent.toLowerCase();
-      row.classList.toggle("hidden", !text.includes(input));
+      const food = row.querySelector(".food-name");
+      const ingredients = row.cells[2];
+      let match = false;
+
+      if (ingredientOnly && ingredients) {
+        match = ingredients.textContent.toLowerCase().includes(input);
+      } else {
+        match = row.textContent.toLowerCase().includes(input);
+      }
+
+      row.classList.toggle("hidden", !match);
     });
   }
 
   function resetSearch() {
     document.getElementById("searchBar").value = "";
+    document.getElementById("ingredientOnly").checked = false;
     filterTable();
   }
 
+  // Animated Emoji Background
   const emojis = ["🍅", "🌽", "🍓", "🌱", "💀", "🥥", "🍕", "🍌", "🎃", "🍩", "🍔"];
   const container = document.getElementById("emoji-bg");
 
@@ -284,7 +337,10 @@
     emoji.style.animationDelay = Math.random() * 5 + "s";
     container.appendChild(emoji);
   }
+
+  window.addEventListener("DOMContentLoaded", loadRecipes);
 </script>
+
 
 </body>
 </html>
